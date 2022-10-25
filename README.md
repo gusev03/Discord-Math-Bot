@@ -4,7 +4,6 @@ A discord bot that can do math!
 Commands:
 
 /add
-
 /sub
 
 /mul
