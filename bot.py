@@ -3,20 +3,21 @@ import lightbulb
 import math
 
 bot = lightbulb.BotApp(
-    token = 'MTAzNDU5NzIzMTE4MzAyNDE0OA.GZnbx6.sctXG1MyHpJ0f20MKSvDYK8fSE8Pt9wPiQ2tUU',
-    default_enabled_guilds = (911399969003552809)   # My Server
+    token = , # REDACTED
+    default_enabled_guilds = ()   # REDACTED
     )
 
 # ADD EXTENSIONS
 
 # Basic Operations
 
+# Converts float to int if possible
 def int_check(val):
     if val.is_integer():
         val = int(val)
     return val
 
-# /add [num1] [num2]
+# /add [num1 = float] [num2 = float]
 @bot.command
 @lightbulb.option('num2', 'second number', type=float)
 @lightbulb.option('num1', 'first number', type=float)
@@ -29,7 +30,7 @@ async def add(context):
     val = int_check(val)
     await context.respond(val)
 
-# /sub [num1] [num2]
+# /sub [num1 = float] [num2 = float]
 @bot.command
 @lightbulb.option('num2', 'second number', type=float)
 @lightbulb.option('num1', 'first number', type=float)
@@ -42,7 +43,7 @@ async def sub(context):
     val = int_check(val)
     await context.respond(val)
 
-# /mul [num1] [num2]
+# /mul [num1 = float] [num2 = float]
 @bot.command
 @lightbulb.option('num2', 'second number', type=float)
 @lightbulb.option('num1', 'first number', type=float)
@@ -56,7 +57,7 @@ async def mul(context):
     await context.respond(val)
 
 
-# /div [num1] [num2]
+# /div [num1 = float] [num2 = float]
 @bot.command
 @lightbulb.option('num2', 'second number', type=float)
 @lightbulb.option('num1', 'first number', type=float)
@@ -72,7 +73,7 @@ async def div(context):
     val = int_check(val)
     await context.respond(val)
 
-# /floordiv [num1] [num2]
+# /floordiv [num1 = float] [num2 = float]
 @bot.command
 @lightbulb.option('num2', 'second number', type=float)
 @lightbulb.option('num1', 'first number', type=float)
@@ -88,7 +89,7 @@ async def floordiv(context):
     val = int_check(val)
     await context.respond(val)
 
-# /mod [num1] [num2]
+# /mod [num1 = float] [num2 = float]
 @bot.command
 @lightbulb.option('num2', 'second number', type=float)
 @lightbulb.option('num1', 'first number', type=float)
@@ -104,7 +105,7 @@ async def mod(context):
     val = int_check(val)
     await context.respond(val)
 
-# /sqrt [num]
+# /sqrt [num = float]
 @bot.command
 @lightbulb.option('num', 'number', type=float)
 @lightbulb.command('sqrt', 'Computes the square root of a number')
@@ -120,7 +121,7 @@ async def sqrt(context):
         val = int_check(val)
     await context.respond(val)
 
-# /pow [base] [exponent]
+# /pow [base = float] [exponent = float]
 @bot.command
 @lightbulb.option('exponent', 'exponent', type=float)
 @lightbulb.option('base', 'base', type=float)
@@ -138,7 +139,7 @@ async def pow(context):
         val = int_check(val)
     await context.respond(val)
 
-# /factorial [num]
+# /factorial [num = int]
 @bot.command
 @lightbulb.option('num', 'number', type=int)
 @lightbulb.command('factorial', 'Computes the factorial of nonnegative integers')
@@ -150,7 +151,7 @@ async def factorial(context):
     else:
         await context.respond(math.factorial(num))
 
-# /exp [num]
+# /exp [num = float]
 @bot.command
 @lightbulb.option('num', 'number', type=float)
 @lightbulb.command('exp', 'Computes e to the power of the number')
@@ -161,7 +162,7 @@ async def exp(context):
     val = int_check(val)
     await context.respond(val)
 
-# /ln [num]
+# /ln [num = float]
 @bot.command
 @lightbulb.option('num', 'number', type=float)
 @lightbulb.command('ln', 'Computes a base e logarithm of a number')
@@ -175,7 +176,7 @@ async def ln(context):
         val = int_check(val)
         await context.respond(val)
 
-# /log [base] [num]
+# /log [base = float] [num = float]
 @bot.command
 @lightbulb.option('num', 'number', type=float)
 @lightbulb.option('base', 'base value', type=float)
@@ -191,7 +192,7 @@ async def log(context):
     else:
         await context.respond(math.log(num, base))
 
-# /log10 [num]
+# /log10 [num = float]
 @bot.command
 @lightbulb.option('num', 'number', type=float)
 @lightbulb.command('log10', 'Computes a base 10 logarithm of a number')
@@ -203,7 +204,7 @@ async def log10(context):
     else:
         await context.respond(math.log10(num))
 
-# /combinations [n] [k]
+# /combinations [n = int] [k = int]
 @bot.command
 @lightbulb.option('k', 'number of items to chose', type=int)
 @lightbulb.option('n', 'total number of items', type=int)
@@ -219,34 +220,65 @@ async def comb(context):
     else:
         await context.respond(math.comb(n, k))
 
-# $$$ /permutations [n] [k]
+# /permutations [n = int] [k = int]
+@bot.command
+@lightbulb.option('k', 'number of items to chose', type=int)
+@lightbulb.option('n', 'total number of items', type=int)
+@lightbulb.command('combinations', 'Computes the number of permutations to pick k items from n total items')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def perm(context):
+    n = context.options.n
+    k = context.options.k
+    if n <= 0:
+        await context.respond('The number of items to chose needs to be positive!')
+    elif k <= 0:
+        await context.respond('The total number of items needs to be positive!')
+    else:
+        await context.respond(math.perm(n, k))
 
+# /gcd [num1 = int] [num2 = int]
+@bot.command
+@lightbulb.option('num2', 'second number', type=int)
+@lightbulb.option('num1', 'first number', type=int)
+@lightbulb.command('combinations', 'Computes the number of combinations to pick k items from n total items')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def gcd(context):
+    num1 = context.options.num1
+    num2 = context.options.num2
+    await context.respond(math.gcd(num1, num2))
 
-# $$$ /gcd [num1] [num2]
-
-# $$$ /lcm [num1] [num2]
+# /lcm [num1 = int] [num2 = int]
+@bot.command
+@lightbulb.option('num2', 'second number', type=int)
+@lightbulb.option('num1', 'first number', type=int)
+@lightbulb.command('combinations', 'Computes the number of combinations to pick k items from n total items')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def lcm(context):
+    num1 = context.options.num1
+    num2 = context.options.num2
+    await context.respond(math.lcm(num1, num2))
 
 # $$$ /deg [num]
 
 # $$$ /rad [num]
 
-# $$$ /sin [num]
+# $$$ /sin [num] [rad]
 
-# $$$ /cos [num]
+# $$$ /cos [num] [rad]
 
-# $$$ /tan [num]
+# $$$ /tan [num] [rad]
 
-# $$$ /csc [num]
+# $$$ /csc [num] [rad]
 
-# $$$ /sec [num]
+# $$$ /sec [num] [rad]
 
-# $$$ /cot [num]
+# $$$ /cot [num] [rad]
 
-# $$$ /asin [num]
+# $$$ /asin [num] [rad]
 
-# $$$ /acos [num]
+# $$$ /acos [num] [rad]
 
-# $$$ /atan [num]
+# $$$ /atan [num] [rad]
 
 # /pi
 @bot.command
@@ -262,11 +294,11 @@ async def pi(context):
 async def e(context):
     await context.respond(math.e)
 
-# /factors
+# /factors [num]
 
-# /primefactors
+# /primefactors [num]
 
-# /mean
+# /mean [num]
 
 # /median
 
@@ -280,6 +312,7 @@ async def e(context):
 
 # /degrees_of_a_sided_figure
 
+# / collatz_conjecture
 
 
 bot.run()
