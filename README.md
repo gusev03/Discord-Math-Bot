@@ -1,4 +1,3 @@
-# discord_math_bot
 A discord bot that can do math!
 
 <h1> Commands </h1>
