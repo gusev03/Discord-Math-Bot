@@ -8,3 +8,5 @@ Commands:
 /div - divide two numbers
 /floordiv - floor divide two numbers
 /fact - compute the factorial of a number
+
+test
