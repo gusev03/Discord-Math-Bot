@@ -258,27 +258,150 @@ async def lcm(context):
     num2 = context.options.num2
     await context.respond(math.lcm(num1, num2))
 
-# $$$ /deg [num]
+# /deg [num = float]
+@bot.command
+@lightbulb.option('degrees', 'degrees', type=float)
+@lightbulb.command('deg', 'Converts radians to degrees')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def deg(context):
+    await context.respond(math.degrees(context.options.degrees))
 
-# $$$ /rad [num]
+# /rad [num = float]
+@bot.command
+@lightbulb.option('radians', 'radians', type=float)
+@lightbulb.command('rad', 'Converts degrees to radians')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def rad(context):
+    await context.respond(math.radians(context.options.radians))
 
-# $$$ /sin [num] [rad]
+# /sin [num = float] [rad = bool]
+@bot.command
+@lightbulb.option('rad', 'True: radians; False: degrees', type=bool)
+@lightbulb.option('num', 'the degrees/radians', type=float)
+@lightbulb.command('sin', 'Computes the sine of the inputted degree/radians')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def sin(context):
+    num = context.options.num
+    rad = context.options.rad
+    if not rad:
+        num = math.radians(num)
+    await context.respond(math.sin(num))
 
-# $$$ /cos [num] [rad]
+# /cos [num = float] [rad = bool]
+@bot.command
+@lightbulb.option('rad', 'True: radians; False: degrees', type=bool)
+@lightbulb.option('num', 'the degrees/radians', type=float)
+@lightbulb.command('cos', 'Computes the cosine of the inputted degree/radians')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def cos(context):
+    num = context.options.num
+    rad = context.options.rad
+    if not rad:
+        num = math.radians(num)
+    await context.respond(math.cos(num))
 
-# $$$ /tan [num] [rad]
+# /tan [num = float] [rad = bool]
+@bot.command
+@lightbulb.option('rad', 'True: radians; False: degrees', type=bool)
+@lightbulb.option('num', 'the degrees/radians', type=float)
+@lightbulb.command('tan', 'Computes the tangent of the inputted degree/radians')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def tan(context):
+    num = context.options.num
+    rad = context.options.rad
+    if not rad:
+        num = math.radians(num)
+    if math.cos(num) == 0:
+        await context.respond("You can't compute the tangent of that value!")
+    else:
+        await context.respond(math.tan(num))
 
-# $$$ /csc [num] [rad]
+# /csc [num = float] [rad = bool]
+@bot.command
+@lightbulb.option('rad', 'True: radians; False: degrees', type=bool)
+@lightbulb.option('num', 'the degrees/radians', type=float)
+@lightbulb.command('csc', 'Computes the cosecant of the inputted degree/radians')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def csc(context):
+    num = context.options.num
+    rad = context.options.rad
+    if not rad:
+        num = math.radians(num)
+    if math.sin(num) == 0:
+        await context.respond("You can't compute the cosecant of that value!")
+    else:
+        await context.respond(1 / math.sin(num))
 
-# $$$ /sec [num] [rad]
+# /sec [num = float] [rad = bool]
+@bot.command
+@lightbulb.option('rad', 'True: radians; False: degrees', type=bool)
+@lightbulb.option('num', 'the degrees/radians', type=float)
+@lightbulb.command('sec', 'Computes the secant of the inputted degree/radians')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def sec(context):
+    num = context.options.num
+    rad = context.options.rad
+    if not rad:
+        num = math.radians(num)
+    if math.cos(num) == 0:
+        await context.respond("You can't compute the secant of that value!")
+    else:
+        await context.respond(1 / math.cos(num))
 
-# $$$ /cot [num] [rad]
+# /cot [num = float] [rad = bool]
+@bot.command
+@lightbulb.option('rad', 'True: radians; False: degrees', type=bool)
+@lightbulb.option('num', 'the degrees/radians', type=float)
+@lightbulb.command('cot', 'Computes the cotangent of the inputted degree/radians')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def cot(context):
+    num = context.options.num
+    rad = context.options.rad
+    if not rad:
+        num = math.radians(num)
+    if math.sin(num) == 0:
+        await context.respond("You can't compute the cotangent of that value!")
+    else:
+        await context.respond(math.cos(num) / math.sin(num))
 
-# $$$ /asin [num] [rad]
+# /asin [num = float] [rad = bool]
+@bot.command
+@lightbulb.option('rad', 'True: radians; False: degrees', type=bool)
+@lightbulb.option('num', 'the degrees/radians', type=float)
+@lightbulb.command('asin', 'Computes the cotangent of the inputted degree/radians')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def asin(context):
+    num = context.options.num
+    rad = context.options.rad
+    if not rad:
+        num = math.radians(num)
+    await context.respond(math.asin(num))
 
-# $$$ /acos [num] [rad]
+# /acos [num = float] [rad = bool]
+@bot.command
+@lightbulb.option('rad', 'True: radians; False: degrees', type=bool)
+@lightbulb.option('num', 'the degrees/radians', type=float)
+@lightbulb.command('acos', 'Computes the cotangent of the inputted degree/radians')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def acos(context):
+    num = context.options.num
+    rad = context.options.rad
+    if not rad:
+        num = math.radians(num)
+    await context.respond(math.acos(num))
 
-# $$$ /atan [num] [rad]
+# /atan [num = float] [rad = bool]
+@bot.command
+@lightbulb.option('rad', 'True: radians; False: degrees', type=bool)
+@lightbulb.option('num', 'the degrees/radians', type=float)
+@lightbulb.command('atan', 'Computes the cotangent of the inputted degree/radians')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def atan(context):
+    num = context.options.num
+    rad = context.options.rad
+    if not rad:
+        num = math.radians(num)
+    await context.respond(math.atan(num))
 
 # /pi
 @bot.command
@@ -294,25 +417,26 @@ async def pi(context):
 async def e(context):
     await context.respond(math.e)
 
-# /factors [num]
+# /factors [num = int]
 
-# /primefactors [num]
+# /primefactors [num = int]
 
-# /mean [num]
+# /mean [num = array<float>]
 
-# /median
+# /median [num = array<float>]
 
-# /mode
+# /mode [num = array<float>]
 
-# /std
+# /std [num = array<float>]
 
-# /var
+# /var [num = array<float>]
 
-# /solve_quadratic
+# /solve_quadratic [a = float] [b = float] [c = float]
 
 # /degrees_of_a_sided_figure
 
 # / collatz_conjecture
 
+# / prime_gaps
 
 bot.run()
