@@ -368,7 +368,7 @@ async def cot(context):
 @bot.command
 @lightbulb.option('rad', 'True: radians; False: degrees', type=bool)
 @lightbulb.option('num', 'the degrees/radians', type=float)
-@lightbulb.command('asin', 'Computes the cotangent of the inputted degree/radians')
+@lightbulb.command('asin', 'Computes the inverse sine of the inputted value')
 @lightbulb.implements(lightbulb.SlashCommand)
 async def asin(context):
     num = context.options.num
@@ -381,7 +381,7 @@ async def asin(context):
 @bot.command
 @lightbulb.option('rad', 'True: radians; False: degrees', type=bool)
 @lightbulb.option('num', 'the degrees/radians', type=float)
-@lightbulb.command('acos', 'Computes the cotangent of the inputted degree/radians')
+@lightbulb.command('acos', 'Computes the inverse cosine of the inputted value')
 @lightbulb.implements(lightbulb.SlashCommand)
 async def acos(context):
     num = context.options.num
@@ -394,7 +394,7 @@ async def acos(context):
 @bot.command
 @lightbulb.option('rad', 'True: radians; False: degrees', type=bool)
 @lightbulb.option('num', 'the degrees/radians', type=float)
-@lightbulb.command('atan', 'Computes the cotangent of the inputted degree/radians')
+@lightbulb.command('atan', 'Computes the inverse tangent of the inputted value')
 @lightbulb.implements(lightbulb.SlashCommand)
 async def atan(context):
     num = context.options.num
