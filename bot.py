@@ -1,15 +1,12 @@
 import hikari
 import lightbulb
 import math
+import statistics as stats
 
 bot = lightbulb.BotApp(
     token = , # REDACTED
     default_enabled_guilds = ()   # REDACTED
     )
-
-# ADD EXTENSIONS
-
-# Basic Operations
 
 # Converts float to int if possible
 def int_check(val):
@@ -417,26 +414,154 @@ async def pi(context):
 async def e(context):
     await context.respond(math.e)
 
+def valid_float_list(entry):
+    return isinstance(entry, list) and all(isinstance(el, float) or isinstance(el, int) for el in entry)
+
+def invalid_float_list():
+    return 'That is not a valid input! Please have your input in a form like this: [1, -2, 3.4]'
+
+# /mean [num = array<float>]
+@bot.command
+@lightbulb.option('nums', 'numbers')
+@lightbulb.command('mean', 'Computes the mean of a list of numbers')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def mean(context):
+    nums = context.options.nums
+    if not valid_float_list(nums):
+        await context.respond(invalid_float_list())
+        return
+    await context.respond(stats.mean(nums))
+
+# /median [num = array<float>]
+@bot.command
+@lightbulb.option('nums', 'numbers')
+@lightbulb.command('median', 'Computes the median of a list of numbers')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def median(context):
+    nums = context.options.nums
+    if not valid_float_list(nums):
+        await context.respond(invalid_float_list())
+        return
+    await context.respond(stats.median(nums))
+
+# /mode [num = array<float>]
+@bot.command
+@lightbulb.option('nums', 'numbers')
+@lightbulb.command('mode', 'Computes the mode of a list of numbers')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def mode(context):
+    nums = context.options.nums
+    if not valid_float_list(nums):
+        await context.respond(invalid_float_list())
+        return
+    await context.respond(stats.mode(nums))
+
+# /quantiles [num = array<float>] [split = int]
+@bot.command
+@lightbulb.option('split', 'number of quantiles', type=int)
+@lightbulb.option('nums', 'numbers')
+@lightbulb.command('quantiles', 'Computes the quantiles of a list of numbers')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def quantiles(context):
+    nums = context.options.nums
+    split = context.options.split
+    if not valid_float_list(nums):
+        await context.respond(invalid_float_list())
+        return
+    if split <= 0:
+        await context.respond('Please chose a positive value for the number of quantiles!')
+    else:
+        await context.respond(stats.stdev(nums, split))
+
+# /std [num = array<float>]
+@bot.command
+@lightbulb.option('nums', 'numbers')
+@lightbulb.command('std', 'Computes the standard deviation of a list of numbers')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def std(context):
+    nums = context.options.nums
+    if not valid_float_list(nums):
+        await context.respond(invalid_float_list())
+        return
+    await context.respond(stats.stdev(nums))
+
+# /var [num = array<float>]
+@bot.command
+@lightbulb.option('nums', 'numbers', type=int)
+@lightbulb.command('var', 'Computes the variance of a list of numbers')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def var(context):
+    nums = context.options.nums
+    if not valid_float_list(nums):
+        await context.respond(invalid_float_list())
+        return
+    await context.respond(stats.variance(nums))
+
+def is_prime(num):
+    if num > 1:
+        for i in range(2, int(math.sqrt(num)) + 1):
+            if (num % i) == 0:
+                return False
+    return True
+
+# /isprime [num = int]
+@bot.command
+@lightbulb.option('num', 'number', type=int)
+@lightbulb.command('isprime', 'Checks if the number is prime')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def isprime(context):
+    num = context.options.num
+    if is_prime(num):
+        await context.respond(str(num) + " is a prime number!")
+    await context.respond(str(num) + " is not a prime number!")
+
 # /factors [num = int]
 
 # /primefactors [num = int]
 
-# /mean [num = array<float>]
+# /primes [max = int]
 
-# /median [num = array<float>]
-
-# /mode [num = array<float>]
-
-# /std [num = array<float>]
-
-# /var [num = array<float>]
+# /primegaps [max = int]
 
 # /solve_quadratic [a = float] [b = float] [c = float]
 
-# /degrees_of_a_sided_figure
+# /degrees_of_a_sided_figure [sides = int]
 
-# / collatz_conjecture
+def collatz_conjecture(num):
+    seq = [num]
+    while num != 1:
+        if num % 2:
+            num = 3 * num + 1 
+        else:
+            num //= 2
+        seq.append(num)
+    return seq
 
-# / prime_gaps
+# /collatznum [num = int]
+@bot.command
+@lightbulb.option('num', 'number', type=int)
+@lightbulb.command('collatz', 'Computes a collatz conjecture sequence')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def collatzseq(context):
+    num = context.options.num
+    if num <= 0:
+        await context.respond('Please enter a positive number!')
+        return
+    seq = collatz_conjecture(num)
+    val = len(seq)
+    await context.respond(val)
+
+# /collatzseq [num = int]
+@bot.command
+@lightbulb.option('num', 'number', type=int)
+@lightbulb.command('collatz', 'Computes a collatz conjecture sequence')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def collatzseq(context):
+    num = context.options.num
+    if num <= 0:
+        await context.respond('Please enter a positive number!')
+        return
+    val = collatz_conjecture(num)
+    await context.respond(val)
 
 bot.run()
