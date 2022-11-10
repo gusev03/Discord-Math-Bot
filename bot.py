@@ -146,7 +146,8 @@ async def factorial(context):
     if num < 0:
         await context.respond("You can't compute the factorial of a negative number!")
     else:
-        await context.respond(math.factorial(num))
+        val = math.factorial(num)
+        await context.respond(val)
 
 # /exp [num = float]
 @bot.command
@@ -187,7 +188,9 @@ async def log(context):
     if base <= 0:
         await context.respond("The base value needs to be positive!")
     else:
-        await context.respond(math.log(num, base))
+        val = math.log(num, base)
+        val = int_check(val)
+        await context.respond(val)
 
 # /log10 [num = float]
 @bot.command
@@ -199,7 +202,9 @@ async def log10(context):
     if num <= 0:
         await context.respond("You can't compute the logarithm of a nonpositive number!")
     else:
-        await context.respond(math.log10(num))
+        val = math.log10(num)
+        val = int_check(val)
+        await context.respond(val)
 
 # /combinations [n = int] [k = int]
 @bot.command
@@ -215,7 +220,8 @@ async def comb(context):
     elif k <= 0:
         await context.respond('The total number of items needs to be positive!')
     else:
-        await context.respond(math.comb(n, k))
+        val = math.comb(n, k)
+        await context.respond(val)
 
 # /permutations [n = int] [k = int]
 @bot.command
@@ -231,7 +237,8 @@ async def perm(context):
     elif k <= 0:
         await context.respond('The total number of items needs to be positive!')
     else:
-        await context.respond(math.perm(n, k))
+        val = math.perm(n, k)
+        await context.respond(val)
 
 # /gcd [num1 = int] [num2 = int]
 @bot.command
@@ -242,7 +249,8 @@ async def perm(context):
 async def gcd(context):
     num1 = context.options.num1
     num2 = context.options.num2
-    await context.respond(math.gcd(num1, num2))
+    val = math.gcd(num1, num2)
+    await context.respond(val)
 
 # /lcm [num1 = int] [num2 = int]
 @bot.command
@@ -253,23 +261,30 @@ async def gcd(context):
 async def lcm(context):
     num1 = context.options.num1
     num2 = context.options.num2
-    await context.respond(math.lcm(num1, num2))
+    val = math.lcm(num1, num2)
+    await context.respond(val)
 
 # /deg [num = float]
 @bot.command
-@lightbulb.option('degrees', 'degrees', type=float)
+@lightbulb.option('radians', 'radians', type=float)
 @lightbulb.command('deg', 'Converts radians to degrees')
 @lightbulb.implements(lightbulb.SlashCommand)
 async def deg(context):
-    await context.respond(math.degrees(context.options.degrees))
+    radians = context.options.radians
+    val = math.degrees(radians)
+    val = int_check(val)
+    await context.respond(val)
 
 # /rad [num = float]
 @bot.command
-@lightbulb.option('radians', 'radians', type=float)
+@lightbulb.option('degrees', 'degrees', type=float)
 @lightbulb.command('rad', 'Converts degrees to radians')
 @lightbulb.implements(lightbulb.SlashCommand)
 async def rad(context):
-    await context.respond(math.radians(context.options.radians))
+    degrees = context.options.degrees
+    val = math.radians(degrees)
+    val = int_check(val)
+    await context.respond(val)
 
 # /sin [num = float] [rad = bool]
 @bot.command
@@ -282,7 +297,9 @@ async def sin(context):
     rad = context.options.rad
     if not rad:
         num = math.radians(num)
-    await context.respond(math.sin(num))
+    val = math.sin(num)
+    val = int_check(val)
+    await context.respond(val)
 
 # /cos [num = float] [rad = bool]
 @bot.command
@@ -295,7 +312,9 @@ async def cos(context):
     rad = context.options.rad
     if not rad:
         num = math.radians(num)
-    await context.respond(math.cos(num))
+    val = math.cos(num)
+    val = int_check(val)
+    await context.respond(val)
 
 # /tan [num = float] [rad = bool]
 @bot.command
@@ -311,7 +330,9 @@ async def tan(context):
     if math.cos(num) == 0:
         await context.respond("You can't compute the tangent of that value!")
     else:
-        await context.respond(math.tan(num))
+        val = math.tan(num)
+        val = int_check(val)
+        await context.respond(val)
 
 # /csc [num = float] [rad = bool]
 @bot.command
@@ -327,7 +348,9 @@ async def csc(context):
     if math.sin(num) == 0:
         await context.respond("You can't compute the cosecant of that value!")
     else:
-        await context.respond(1 / math.sin(num))
+        val = 1 / math.sin(num)
+        val = int_check(val)
+        await context.respond(val)
 
 # /sec [num = float] [rad = bool]
 @bot.command
@@ -343,7 +366,9 @@ async def sec(context):
     if math.cos(num) == 0:
         await context.respond("You can't compute the secant of that value!")
     else:
-        await context.respond(1 / math.cos(num))
+        val = 1 / math.cos(num)
+        val = int_check(val)
+        await context.respond(val)
 
 # /cot [num = float] [rad = bool]
 @bot.command
@@ -359,7 +384,9 @@ async def cot(context):
     if math.sin(num) == 0:
         await context.respond("You can't compute the cotangent of that value!")
     else:
-        await context.respond(math.cos(num) / math.sin(num))
+        val = math.cos(num) / math.sin(num)
+        val = int_check(val)
+        await context.respond(val)
 
 # /asin [num = float] [rad = bool]
 @bot.command
@@ -372,7 +399,9 @@ async def asin(context):
     rad = context.options.rad
     if not rad:
         num = math.radians(num)
-    await context.respond(math.asin(num))
+    val = math.asin(num)
+    val = int_check(val)
+    await context.respond(val)
 
 # /acos [num = float] [rad = bool]
 @bot.command
@@ -385,7 +414,9 @@ async def acos(context):
     rad = context.options.rad
     if not rad:
         num = math.radians(num)
-    await context.respond(math.acos(num))
+    val = math.acos(num)
+    val = int_check(val)
+    await context.respond(val)
 
 # /atan [num = float] [rad = bool]
 @bot.command
@@ -398,21 +429,25 @@ async def atan(context):
     rad = context.options.rad
     if not rad:
         num = math.radians(num)
-    await context.respond(math.atan(num))
+    val = math.atan(num)
+    val = int_check(val)
+    await context.respond(val)
 
 # /pi
 @bot.command
 @lightbulb.command('pi', 'displays the value of pi')
 @lightbulb.implements(lightbulb.SlashCommand)
 async def pi(context):
-    await context.respond(math.pi)
+    val = math.pi
+    await context.respond(val)
 
 # /e
 @bot.command
 @lightbulb.command('e', 'displays the value of e')
 @lightbulb.implements(lightbulb.SlashCommand)
 async def e(context):
-    await context.respond(math.e)
+    val = math.e
+    await context.respond(val)
 
 def valid_float_list(entry):
     return isinstance(entry, list) and all(isinstance(el, float) or isinstance(el, int) for el in entry)
@@ -430,7 +465,9 @@ async def mean(context):
     if not valid_float_list(nums):
         await context.respond(invalid_float_list())
         return
-    await context.respond(stats.mean(nums))
+    val = stats.mean(nums)
+    val = int_check(val)
+    await context.respond(val)
 
 # /median [num = array<float>]
 @bot.command
@@ -442,7 +479,9 @@ async def median(context):
     if not valid_float_list(nums):
         await context.respond(invalid_float_list())
         return
-    await context.respond(stats.median(nums))
+    val = stats.median(nums)
+    val = int_check(val)
+    await context.respond(val)
 
 # /mode [num = array<float>]
 @bot.command
@@ -454,7 +493,9 @@ async def mode(context):
     if not valid_float_list(nums):
         await context.respond(invalid_float_list())
         return
-    await context.respond(stats.mode(nums))
+    val = stats.mode(nums)
+    val = int_check(val)
+    await context.respond(val)
 
 # /quantiles [num = array<float>] [split = int]
 @bot.command
@@ -471,7 +512,9 @@ async def quantiles(context):
     if split <= 0:
         await context.respond('Please chose a positive value for the number of quantiles!')
     else:
-        await context.respond(stats.stdev(nums, split))
+        val = stats.stdev(nums, split)
+        val = int_check(val)
+        await context.respond(val)
 
 # /std [num = array<float>]
 @bot.command
@@ -483,7 +526,9 @@ async def std(context):
     if not valid_float_list(nums):
         await context.respond(invalid_float_list())
         return
-    await context.respond(stats.stdev(nums))
+    val = stats.stdev(nums)
+    val = int_check(val)
+    await context.respond(val)
 
 # /var [num = array<float>]
 @bot.command
@@ -495,7 +540,9 @@ async def var(context):
     if not valid_float_list(nums):
         await context.respond(invalid_float_list())
         return
-    await context.respond(stats.variance(nums))
+    val = stats.variance(nums)
+    val = int_check(val)
+    await context.respond(val)
 
 def is_prime(num):
     if num > 1:
@@ -525,7 +572,19 @@ async def isprime(context):
 
 # /solve_quadratic [a = float] [b = float] [c = float]
 
-# /degrees_of_a_sided_figure [sides = int]
+
+# /degreesfigure [sides = int]
+@bot.command
+@lightbulb.option('sides', 'number of sides of the figure', type=int)
+@lightbulb.command('degreesfigure', 'Computes the total degrees of the figure')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def degreesfigure(context):
+    sides = context.options.sides
+    if sides < 3:
+        await context.respond('The number of sides has to be at least 3!')
+    else:
+        val = (sides - 2) * 180
+        await context.respond(val)
 
 def collatz_conjecture(num):
     seq = [num]
@@ -540,9 +599,9 @@ def collatz_conjecture(num):
 # /collatznum [num = int]
 @bot.command
 @lightbulb.option('num', 'number', type=int)
-@lightbulb.command('collatz', 'Computes a collatz conjecture sequence')
+@lightbulb.command('collatznum', 'Computes the length of the collatz conjecture sequence')
 @lightbulb.implements(lightbulb.SlashCommand)
-async def collatzseq(context):
+async def collatznum(context):
     num = context.options.num
     if num <= 0:
         await context.respond('Please enter a positive number!')
@@ -554,7 +613,7 @@ async def collatzseq(context):
 # /collatzseq [num = int]
 @bot.command
 @lightbulb.option('num', 'number', type=int)
-@lightbulb.command('collatz', 'Computes a collatz conjecture sequence')
+@lightbulb.command('collatzseq', 'Computes a collatz conjecture sequence')
 @lightbulb.implements(lightbulb.SlashCommand)
 async def collatzseq(context):
     num = context.options.num
