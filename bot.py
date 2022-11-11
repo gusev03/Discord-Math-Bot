@@ -562,15 +562,104 @@ async def isprime(context):
         await context.respond(str(num) + " is a prime number!")
     await context.respond(str(num) + " is not a prime number!")
 
+def get_factors(num):
+    num = abs(num)
+    factors = [1]
+    for i in range(2, int(math.sqrt(num) + 1)):
+        if num % i == 0:
+            factors.append(i)
+    rev = reversed(factors)
+    if math.sqrt(num).is_integer(): # So square root isn't duplicated
+        next(rev)
+    for i in rev:
+        factors.append(num // rev)
+    return factors
+
 # /factors [num = int]
+@bot.command
+@lightbulb.option('num', 'number', type=int)
+@lightbulb.command('factors', 'Prints the factors of a number')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def factors(context):
+    num = context.options.num
+    factors = get_factors(num)
+    factors = str(factors).strip('[]')
+    await context.respond(factors)
 
 # /primefactors [num = int]
+@bot.command
+@lightbulb.option('num', 'number', type=int)
+@lightbulb.command('primefactors', 'Prints the prime factors of a number')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def primefactors(context):
+    num = context.options.num
+    factors = get_factors(num)
+    primefactors = []
+    for i in factors:
+        if is_prime(i):
+            primefactors.append(i)
+    primefactors = str(primefactors).strip('[]')
+    await context.respond(primefactors)
 
-# /primes [max = int]
+# /primes [num = int]
+@bot.command
+@lightbulb.option('num', 'number', type=int)
+@lightbulb.command('primefactors', 'Prints all the prime numbers up to the given number')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def primes(context):
+    num = context.options.num
+    if num < 2:
+        await context.respond('There are no prime numbers!')
+    else:
+        primes = []
+        for i in range(num + 1):
+            if is_prime(i):
+                primes.append(i)
+        primes = str(primes).strip('[]')
+        await context.respond(primes)
 
-# /primegaps [max = int]
+# /primegaps [num = int]
+@bot.command
+@lightbulb.option('num', 'number', type=int)
+@lightbulb.command('primegaps', 'Prints all the prime gaps up to the given number')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def primegaps(context):
+    num = context.options.num
+    if num < 3:
+        await context.respond('There are no prime gaps!')
+    else:
+        prime_gaps = [2]
+        prev = 2
+        for i in range(3, num + 1):
+            if is_prime(i):
+                prime_gaps.append(i - prev)
+                prev = i
+        prime_gaps = str(prime_gaps).strip('[]')
+        await context.respond(prime_gaps)
 
-# /solve_quadratic [a = float] [b = float] [c = float]
+# /solvequadratic [a = float] [b = float] [c = float]
+@bot.command
+@lightbulb.option('c', 'third coefficient', type=float)
+@lightbulb.option('b', 'second coefficient', type=float)
+@lightbulb.option('a', 'first coefficient', type=float)
+@lightbulb.command('solvequadratic', 'Solves the quadratic equation')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def solvequadratic(context):
+    a = context.options.a
+    b = context.options.b
+    c = context.options.c
+    val = -b / (2 * a)
+    plusminus = (b ** 2) - (4 * a * c)
+    plusminus = abs(plusminus)
+    plusminus = math.sqrt(plusminus)
+    plusminus /= (2 * a)
+    if b ** 2 >= 4 * a * c: # real solutions
+        val1 = str(val + plusminus)
+        val2 = str(val - plusminus)
+    else: # imaginary solutions
+        val1 = str(val) + ' + ' + str(plusminus) + 'i'
+        val2 = str(val) + ' - ' + str(plusminus) + 'i'
+    await context.respond('The solutions for those coefficient are x = ' + val1 + ' and x = ' + val2)
 
 
 # /degreesfigure [sides = int]
